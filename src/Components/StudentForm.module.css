@@ -1,5 +1,5 @@
 .formContainer{
-    margin: 2rem auto; /* Center the form and provide some margin */
+    margin: 5rem auto; /* Center the form and provide some margin */
     max-width: 1000px;
     display: flex;
     flex-direction: column;

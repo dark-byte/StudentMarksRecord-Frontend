@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Admin.module.css'; // Import CSS module
+import Navbar from './Nav';
 
 function Admin() {
   const [batch, setBatch] = useState('');
@@ -9,6 +10,7 @@ function Admin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [warning, setWarning] = useState(false);
+  const [subCode, setSubCode] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,6 +20,9 @@ function Admin() {
         break;
       case 'section':
         setSection(value);
+        break;
+      case 'subCode':
+        setSubCode(value);
         break;
       default:
         break;
@@ -33,7 +38,7 @@ function Admin() {
     setError(null);
 
     try {
-      const response = await axios.get(`http://localhost:3000/students/${batch}/${section}`);
+      const response = await axios.get(`http://localhost:3000/students/${batch}/${subCode}/${section}`);
       setData(response.data);
       setWarning(true)
     } catch (error) {
@@ -63,6 +68,7 @@ function Admin() {
 
   return (
     <div className={styles.container}>
+      <Navbar/>
       <h1>Student Data</h1>
       <div className={styles.dropdownAndButton}>
         <select value={batch} onChange={handleChange} name="batch" className={styles.dropdown}>
@@ -76,6 +82,15 @@ function Admin() {
           {/* Replace with options for available sections */}
           <option value="A">Section A</option>
           <option value="B">Section B</option>
+        </select>
+        <select value={subCode} onChange={handleChange} name="subCode" className={styles.dropdown}>
+          <option value="">Subject Code</option>
+          {/* Replace with options for available sections */}
+          <option value="21CS51">21CS51</option>
+          <option value="21CS52">21CS52</option>
+          <option value="21CS53">21CS53</option>
+          <option value="21CS54">21CS54</option>
+          <option value="21CS55">21CS55</option>
         </select>
         <button onClick={handleSubmit} disabled={isLoading} className={styles.submitButton}>
           {isLoading ? 'Loading...' : 'Submit'}
